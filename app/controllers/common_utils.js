@@ -5,7 +5,7 @@ const smsClient = require('../../config/note_config');
 // 随机数生成
 const utils = require('../../utils');
 
-// 发送短信验证吗
+// 发送短信验证码
 exports.getVerificationCode = async (ctx, next) => {
   const requestBody = ctx.request.body;
   const code = utils.randomWord(false, 6);
