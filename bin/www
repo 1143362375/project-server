@@ -16,13 +16,32 @@ const port = normalizePort(config.port || '3000');
 
 const server = http.createServer(app.callback());
 
+const io = require('socket.io')(server);
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
+
+// socke.io
+io.on('connection', (socket) => {
+  console.log('zheshi aaaa', socket)
+  // 群聊
+  socket.on('sendGroupMsg', function (data) {
+  console.log("sendGroupMsg " ,data);    
+    socket.broadcast.emit('receiveGroupMsg', data);
+  });
+
+  // 上线
+  socket.on('online', name => {
+    socket.broadcast.emit('online', name)
+  });
+})
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
 
 /**
  * Normalize a port into a number, string, or false.

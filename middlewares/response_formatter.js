@@ -4,21 +4,21 @@
 const ApiError = require('../app/error/ApiError');
 const response_formatter = async ctx => {
   // 如果有返回数据，将返回数据添加到data
-  console.log(ctx.body);
-  if (ctx.body.error) {
-    ctx.body = {
-      code: 1000,
-      success: true,
-      error: ctx.body.error // 有错误输出
-    };
-  } else if (typeof ctx.body === 'object') {
-    ctx.body = {
-      code: 200,
-      success: true,
-      message: ctx.body.message,
-      data: ctx.body.data // 无错误放到data中
-    };
-  }
+  // console.log(ctx.body);
+    if (ctx.body && ctx.body.error ) {
+      ctx.body = {
+        code: 1000,
+        success: true,
+        error: ctx.body.error // 有错误输出
+      };
+    } else if (typeof ctx.body === 'object') {
+      ctx.body = {
+        code: 200,
+        success: true,
+        message: ctx.body.message,
+        data: ctx.body.data // 无错误放到data中
+      };
+    }
 };
 
 const url_filter = pattern => {
@@ -34,7 +34,7 @@ const url_filter = pattern => {
         ctx.body = {
           success: false,
           code: error.code,
-          message: error.message
+          errorInfo: error.message
         };
       }
       // 继续抛，让外层中间件处理日志

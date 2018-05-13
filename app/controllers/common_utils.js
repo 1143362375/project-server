@@ -7,6 +7,7 @@ const utils = require('../../utils');
 
 // 发送短信验证码
 exports.getVerificationCode = async (ctx, next) => {
+  console.log('近俩了',code);  
   const requestBody = ctx.request.body;
   const code = utils.randomWord(false, 6);
   const data = {
